@@ -1,0 +1,2 @@
+#!/bin/bash
+ls -pa1 | grep -v '^\.\.$' | sort -d -k1.1,1.2 -k1.3
