@@ -1,19 +1,23 @@
 #!/usr/bin/env bash
-## Install web server - Nginx.
-##-----------------------------
-## Run sudo update.
-sudo apt-get -y update
-## Install nginx.
-sudo apt-get -y install nginx
+# Configures a new ubuntu machine by installing
+# Nginx listening on port 80
+# Serve a page that returns Hello World
 
-## Allow nginx on firewall
-sudo service nginx startsudo ufw allow 'Nginx HTTP'
+# install the Nginx server
+sudo apt-get update -y -qq && sudo apt-get install nginx -y
 
-## Change User /var/www
-sudo chown -R "USER":"USER" /var/www/html
+# starting nginx service
+sudo service nginx start
+
+# allowing nginx on firewall
+sudo ufw allow 'Nginx HTTP'
+
+# Give the user ownership to website files for easy editing
+sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 
-## Change file default --> index.html to nginx.
-echo "Hello World!" > /var/www/html/index.nginx-debian.html
-## Service nginx - start.
-sudo service nginx start
+# Creating new index
+echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
+
+# Restarting nginx
+sudo service nginx restart
