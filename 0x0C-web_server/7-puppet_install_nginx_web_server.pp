@@ -1,16 +1,24 @@
-# Ussing puppet - intall Web Server Nginx and confugure redirect_me
-# Install Nginx
-exec {'Install_nginx':
-  provider => shell,
-  command  => 'sudo apt-get -y update ;\
-               sudo apt-get -y install nginx ;\
-               sudo chown -R ubuntu /var/www ;\
-               sudo service nginx start',
+# Setup New Ubuntu server with nginx
+
+exec { 'update system':
+        command => '/usr/bin/apt-get update',
 }
-# Configure redirect_me
-exec {'Configure_redirect':
-  provider => shell,
-  command  => 'echo "Hello World" > /var/www/html/index.nginx-debian.html ;\
-               sudo sed -i "s/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4 permanent;/" /etc/nginx/sites-available/default ;\
-               sudo service nginx restart',
+
+package { 'nginx':
+	ensure => 'installed',
+	require => Exec['update system']
+}
+
+file {'/var/www/html/index.html':
+	content => 'Hello World!'
+}
+
+exec {'redirect_me':
+	command => 'sed -i "24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default',
+	provider => 'shell'
+}
+
+service {'nginx':
+	ensure => running,
+	require => Package['nginx']
 }
