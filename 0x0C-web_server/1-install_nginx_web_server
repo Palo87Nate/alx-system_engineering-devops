@@ -10,7 +10,7 @@ sudo apt-get -y install nginx
 sudo service nginx startsudo ufw allow 'Nginx HTTP'
 
 ## Change User /var/www
-sudo chown -R ubuntu:ubuntu /var/www/html
+sudo chown -R "USER":"USER" /var/www/html
 sudo chmod -R 755 /var/www
 
 ## Change file default --> index.html to nginx.
