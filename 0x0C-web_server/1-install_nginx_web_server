@@ -35,3 +35,4 @@ echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
 sudo service nginx restart
 
 echo -e "\n${green}Completed.${reset} ✅\n"
+
