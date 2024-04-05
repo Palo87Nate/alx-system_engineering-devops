@@ -7,6 +7,7 @@ global
         user haproxy
         group haproxy
         daemon
+        tune.ssl.default-dh-param 2048
 
         # Default SSL material locations
         ca-base /etc/ssl/certs
@@ -35,10 +36,12 @@ defaults
 
 listen 522523-lb-01
         bind *:80
-        bind :443 ssl crt /etc/letsencrypt/live/www.devpalo.tech/www.devpalo.tech.pem
+        bind *:433 ssl crt /etc/letsencrypt/live/www.devpalo.tech/www.devpalo.tech.pem
         mode http
         balance roundrobin
-        reqadd X-Forwarded-Port:\ 443
+        reqadd X-Forwarded-Port:\ 433
+        option httpclose
         option forwardfor
         server 522523-web-01 54.84.225.123:80 check
         server 522523-web-02 34.202.164.77:80 check
+
