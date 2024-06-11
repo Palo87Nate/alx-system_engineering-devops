@@ -19,10 +19,11 @@ import requests
 
 def number_of_subscribers(subreddit):
     """
-    Queries the Reddit API and returns the number of subscribers for a given subreddit.
+    Queries the Reddit API and returns the number 
+    of subscribers for a given subreddit.
     If an invalid subreddit is given, the function returns 0.
     """
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
+    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
     user_agent = 'User Agent'
     headers = {'User-Agent': user_agent}
 
