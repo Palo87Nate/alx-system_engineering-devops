@@ -1,5 +1,8 @@
-# Sky is the limit, let's bring that limit higher
-exec { 'Skylimit':
-	command => 'sed -i "s/15/4096/" /etc/default/nginx; service nginx restart',
-	provider => shell
+# Change the OS configuration so that it is possible to login with
+# the holberton user and open a file without any error message.
+exec { 'Userlimit':
+  command  => 'sed -i "s/5/50/" /etc/security/limits.conf; \
+                sed -i "s/4/40/" /etc/security/limits.conf;',
+  provider => shell,
 }
+
